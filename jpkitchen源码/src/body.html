@@ -1,0 +1,300 @@
+<header>
+  <h1>今天<span class="pin"></span>吃什么</h1>
+  <div class="sub" id="greet">在日本，把冰箱吃干净</div>
+  <button id="gearBtn">⚙️</button>
+</header>
+
+<!-- ══════════ 今天 ══════════ -->
+<section id="tab-today">
+  <div class="wrap">
+    <div class="mood-row" id="moodRow">
+      <button class="mood" data-mood="tummy">😣<span>肠胃弱</span></button>
+      <button class="mood" data-mood="lazy">🥱<span>犯懒</span></button>
+      <button class="mood" data-mood="light">🌿<span>清爽</span></button>
+      <button class="mood" data-mood="high">🔥<span>嘴馋</span></button>
+    </div>
+
+    <button class="btn-main hero-btn" id="genBtn">🎲 一键排今天</button>
+    <div class="row-btns" style="margin-top:8px">
+      <button class="btn-line" id="genFavBtn">⭐ 只用常做菜</button>
+      <button class="btn-line" id="genHomeBtn">🧊 不出门就做</button>
+      <button class="btn-line" id="clearDay">清空</button>
+    </div>
+
+    <button class="btn-line" id="eatoutBtn" style="margin-top:8px">🍜 今天不做饭，在外面吃</button>
+
+    <div id="genNote" class="gen-note hide"></div>
+    <div id="planCard" class="card hide"></div>
+
+    <div class="sec-head"><h2 id="dateTitle">今天</h2><span class="hint" id="dateSub"></span></div>
+    <div class="card nutri-card" id="nutriCard">
+      <div class="ring">
+        <svg width="96" height="96" viewBox="0 0 96 96">
+          <circle cx="48" cy="48" r="40" fill="none" stroke="var(--line)" stroke-width="10"></circle>
+          <circle id="ringArc" cx="48" cy="48" r="40" fill="none" stroke="var(--leaf)" stroke-width="10"
+                  stroke-linecap="round" stroke-dasharray="251.3" stroke-dashoffset="251.3"></circle>
+        </svg>
+        <div class="mid"><b id="ringPct">0%</b><small id="ringKcal">0 / 2000</small></div>
+      </div>
+      <div class="macros">
+        <div class="macro"><div class="lbl"><b>蛋白质</b><span id="pTxt">0 / 0 g</span></div><div class="bar"><i class="p" id="pBar" style="width:0"></i></div></div>
+        <div class="macro"><div class="lbl"><b>脂肪</b><span id="fTxt">0 / 0 g</span></div><div class="bar"><i class="f" id="fBar" style="width:0"></i></div></div>
+        <div class="macro"><div class="lbl"><b>碳水</b><span id="cTxt">0 / 0 g</span></div><div class="bar"><i class="c" id="cBar" style="width:0"></i></div></div>
+      </div>
+    </div>
+    <div class="card flat" id="nutriFoot" style="margin-top:-6px;padding:10px 14px"><div class="nutri-foot" style="border:0;padding:0;margin:0" id="nutriFootTxt"></div></div>
+
+    <div id="mealSlots"></div>
+
+    <div id="recoWrap" class="hide">
+      <div class="sec-head"><h2>冰箱里能做</h2><span class="hint">点一下排进今天</span></div>
+      <div class="scroll-x" id="recoRow"></div>
+    </div>
+
+    <div class="sec-head"><h2>周末备菜</h2><span class="hint">花一个下午，省五个晚上</span></div>
+    <button class="btn-main amber" id="prepBtn">🍱 排一份备菜方案</button>
+  </div>
+</section>
+
+<!-- ══════════ 冰箱 ══════════ -->
+<section id="tab-fridge" class="hide">
+  <div class="wrap">
+    <div class="sec-head"><h2>冰箱</h2><span class="hint" id="fridgeCount"></span></div>
+
+    <div id="expireAlert" class="alert hide"></div>
+
+    <div class="row-btns" style="margin-bottom:10px">
+      <button class="btn-main amber" id="ocrBtn">📷 拍小票入库</button>
+      <button class="btn-main" id="quickAddBtn">＋ 手动添加</button>
+    </div>
+
+    <div class="card">
+      <h3 class="blk">🍳 消耗</h3>
+      <p class="muted" style="margin-bottom:9px">在「今天」把菜标成做好了，用掉的食材会自动从冰箱扣掉。调料不扣。</p>
+      <label style="display:flex;align-items:center;gap:9px;font-size:13.5px">
+        <input type="checkbox" id="autoConsume" style="width:18px;height:18px">自动扣减库存
+      </label>
+    </div>
+
+    <div id="fridgeList"></div>
+  </div>
+</section>
+
+<!-- ══════════ 菜谱 ══════════ -->
+<section id="tab-book" class="hide">
+  <div class="wrap">
+    <div class="sec-head"><h2>菜谱</h2><span class="hint" id="bookCount"></span></div>
+    <div class="add-inline" style="margin-bottom:9px">
+      <input type="text" id="bookSearch" placeholder="搜菜名、食材…">
+      <button id="addRecipeBtn">＋</button>
+    </div>
+    <div class="scroll-x" style="margin-bottom:7px" id="bookMain"></div>
+    <div class="scroll-x" style="margin-bottom:11px" id="bookTags"></div>
+    <div id="bookList"></div>
+  </div>
+</section>
+
+<!-- ══════════ 清单 ══════════ -->
+<section id="tab-shop" class="hide">
+  <div class="wrap">
+    <div class="sec-head"><h2>买菜清单</h2><span class="hint">买到一样勾一样</span></div>
+    <div class="card">
+      <div class="add-inline"><input type="text" id="extraItem" placeholder="再加点别的（纸巾、水果…）"><button id="addExtra">＋</button></div>
+    </div>
+    <div id="shopList"></div>
+    <div class="card" style="margin-top:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <h3 class="blk" style="margin:0">📝 随手记</h3><button class="btn-tiny" id="clearMemo">清空</button>
+      </div>
+      <textarea id="memo" rows="2" placeholder="看看打折区、别忘了猫粮…"></textarea>
+    </div>
+    <div style="margin-top:14px">
+      <button class="btn-main amber" id="askAI">🤖 生成买菜路线（贴给 AI）</button>
+      <button class="btn-line" id="clearDone" style="margin-top:8px">✓ 买完了，放进冰箱</button>
+    </div>
+  </div>
+</section>
+
+<nav class="tabs">
+  <button data-tab="today" class="on"><span class="ic">📅</span>今天</button>
+  <button data-tab="fridge"><span class="ic">🧊</span>冰箱</button>
+  <button data-tab="book"><span class="ic">📖</span>菜谱</button>
+  <button data-tab="shop"><span class="ic">🛒</span><span id="shopBadge"></span>清单</button>
+</nav>
+
+<!-- ══════════ sheets ══════════ -->
+<div class="mask" id="pickSheet"><div class="sheet">
+  <div class="sheet-head"><h3 id="pickTitle">选菜</h3><button class="x" data-close="pickSheet">✕</button></div>
+  <div class="add-inline" style="margin-bottom:9px"><input type="text" id="pickSearch" placeholder="搜一下…"><button id="pickSearchGo">🔍</button></div>
+  <div class="scroll-x" style="margin-bottom:10px" id="pickTags"></div>
+  <div id="pickList"></div>
+</div></div>
+
+<div class="mask" id="detailSheet"><div class="sheet">
+  <div class="sheet-head"><h3 id="dtTitle">怎么做</h3><button class="x" data-close="detailSheet">✕</button></div>
+  <div id="dtBody"></div>
+</div></div>
+
+<div class="mask" id="ocrSheet"><div class="sheet">
+  <div class="sheet-head"><h3>📷 小票入库</h3><button class="x" data-close="ocrSheet">✕</button></div>
+  <div class="ocr-drop" style="margin-bottom:11px">
+    <b>三步入库，不花一分钱</b>
+    ① 点下面的按钮复制指令<br>② 打开手机上任意 AI App，传小票照片 + 粘贴指令<br>③ 把它给你的那行结果复制回来，粘到下面
+  </div>
+  <button class="btn-main amber" id="ocrCopyPrompt" style="margin-bottom:11px">📋 复制识别指令</button>
+  <div class="field"><label>把 AI 给你的结果粘在这里（也可以直接手打，逗号分隔）</label>
+    <textarea id="ocrPaste" rows="4" placeholder="猪肉片, 鸡蛋, 菠菜, 牛奶, 豆腐…"></textarea></div>
+  <button class="btn-line" id="ocrParse">解析</button>
+  <div class="parsed" id="ocrParsed"></div>
+  <div id="ocrConfirmWrap" class="hide" style="margin-top:12px">
+    <p class="muted" style="margin-bottom:8px">点掉不想入库的，然后：</p>
+    <button class="btn-main" id="ocrConfirm">✓ 全部放进冰箱</button>
+  </div>
+</div></div>
+
+<div class="mask" id="eoSheet"><div class="sheet">
+  <div class="sheet-head"><h3>🍜 在外面吃</h3><button class="x" data-close="eoSheet">✕</button></div>
+  <div class="seg sm" id="eoSlotSeg" style="margin-bottom:12px"></div>
+  <div id="eoRoll"></div>
+  <div class="chips" id="eoTags" style="margin-bottom:11px"></div>
+  <div class="muted" style="margin-bottom:8px" id="eoCount"></div>
+  <div id="eoList"></div>
+</div></div>
+
+<div class="mask" id="prepSheet"><div class="sheet">
+  <div class="sheet-head"><h3>🍱 周末备菜</h3><button class="x" data-close="prepSheet">✕</button></div>
+  <p class="muted" style="margin-bottom:9px">挑几道适合提前做的菜（炖菜整锅做、肉提前腌），点一下换选。</p>
+  <button class="btn-line" id="prepReroll" style="margin-bottom:10px">🎲 换一组给我看看</button>
+  <div class="chips" id="prepPool" style="margin-bottom:14px"></div>
+  <div id="prepPlan"></div>
+</div></div>
+
+<div class="mask" id="addSheet"><div class="sheet">
+  <div class="sheet-head"><h3>＋ 加进冰箱</h3><button class="x" data-close="addSheet">✕</button></div>
+  <div class="add-inline" style="margin-bottom:11px"><input type="text" id="addItemInput" placeholder="输入食材名，回车即可"><button id="addItemGo">＋</button></div>
+  <div id="libPicker"></div>
+</div></div>
+
+<div class="mask" id="recipeSheet"><div class="sheet">
+  <div class="sheet-head"><h3 id="rfTitle">加一道菜</h3><button class="x" data-close="recipeSheet">✕</button></div>
+  <div class="field"><label>菜名</label><input type="text" id="rfName" placeholder="比如 番茄炒蛋"></div>
+  <div class="field"><label>食材（逗号或换行分隔）</label><textarea id="rfIngs" rows="2" placeholder="番茄, 鸡蛋, 葱, 盐"></textarea></div>
+  <div class="grid2">
+    <div class="field"><label>日语名（选填）</label><input type="text" id="rfJa" placeholder="トマトと卵の炒め物"></div>
+    <div class="field"><label>热量 kcal（选填）</label><input type="number" id="rfKcal" placeholder="280"></div>
+  </div>
+  <div class="grid3">
+    <div class="field"><label>蛋白 g</label><input type="number" id="rfP"></div>
+    <div class="field"><label>脂肪 g</label><input type="number" id="rfF"></div>
+    <div class="field"><label>碳水 g</label><input type="number" id="rfC"></div>
+  </div>
+  <div class="field"><label>类型</label><div class="seg" id="rfType">
+    <button data-v="meal" class="on">正餐</button><button data-v="breakfast">早餐</button></div></div>
+  <div class="field"><label>标签</label><div class="chips" id="rfTags"></div></div>
+  <div class="field"><label>做法（一行一步，选填）</label><textarea id="rfSteps" rows="3"></textarea></div>
+  <label style="display:flex;align-items:center;gap:9px;font-size:14px;margin-bottom:12px">
+    <input type="checkbox" id="rfFav" style="width:18px;height:18px" checked>标为常做菜（一键排菜会优先用）</label>
+  <button class="btn-main" id="rfSave">保存</button>
+  <div class="ocr-drop" style="margin-top:14px">
+    <b>懒得填？让 AI 填</b>复制指令 → 贴给 AI → 把 JSON 粘回来
+  </div>
+  <div class="add-inline" style="margin-top:9px"><input type="text" id="rfAiWhat" placeholder="想加的菜名，比如 麻婆豆腐"><button id="rfAiCopy">📋</button></div>
+  <div class="field" style="margin-top:9px"><textarea id="rfAiPaste" rows="3" placeholder="把 AI 返回的 JSON 粘在这里"></textarea></div>
+  <button class="btn-line" id="rfAiParse">导入这段 JSON</button>
+</div></div>
+
+<div class="mask" id="setSheet"><div class="sheet">
+  <div class="sheet-head"><h3>⚙️ 设置</h3><button class="x" data-close="setSheet">✕</button></div>
+
+  <h3 class="blk">身体数据</h3>
+  <div class="grid2">
+    <div class="field"><label>性别</label><div class="seg sm" id="stSex"><button data-v="m">男</button><button data-v="f">女</button></div></div>
+    <div class="field"><label>年龄</label><input type="number" id="stAge" inputmode="numeric"></div>
+  </div>
+  <div class="grid2">
+    <div class="field"><label>身高 cm</label><input type="number" id="stH" inputmode="numeric"></div>
+    <div class="field"><label>体重 kg</label><input type="number" id="stW" inputmode="numeric"></div>
+  </div>
+  <div class="field"><label>活动量</label><div class="seg sm" id="stAct">
+    <button data-v="1.3">几乎不动</button><button data-v="1.5">日常走动</button><button data-v="1.7">常运动</button></div></div>
+  <div class="field"><label>目标</label><div class="seg sm" id="stGoal">
+    <button data-v="cut">减脂</button><button data-v="keep">维持</button><button data-v="gain">增肌</button></div></div>
+  <div class="tdee-box" id="stTdee"></div>
+
+  <h3 class="blk" style="margin-top:16px">吃东西的规矩</h3>
+  <div class="field"><label>荤素</label><div class="seg sm" id="stDiet">
+    <button data-v="all">都吃</button><button data-v="nored">不吃红肉</button><button data-v="fish">只吃鱼虾</button><button data-v="veg">全素</button></div></div>
+  <div class="field"><label>不吃的东西（逗号分隔）</label><input type="text" id="stAvoid" placeholder="香菜, 内脏"></div>
+
+  <h3 class="blk" style="margin-top:16px">买菜</h3>
+  <div class="grid2">
+    <div class="field"><label>住在哪个市/区</label><input type="text" id="stCity" placeholder="東京都 新宿区"></div>
+    <div class="field"><label>最近的车站</label><input type="text" id="stArea" placeholder="高田馬場"></div>
+  </div>
+
+  <h3 class="blk" style="margin-top:16px">数据</h3>
+  <div class="row-btns" style="margin-bottom:8px">
+    <button class="btn-line" id="exportData">导出备份</button>
+    <button class="btn-line" id="importData">导入备份</button>
+  </div>
+  <input type="file" id="importFile" accept="application/json" class="hide">
+  <button class="btn-line" id="resetAll" style="color:var(--tomato)">全部清空重来</button>
+  <div style="height:16px"></div>
+  <button class="btn-main" id="setSave">保存</button>
+</div></div>
+
+<!-- ══════════ onboarding ══════════ -->
+<div class="ob" id="ob"><div class="ob-in">
+  <div id="obStep0">
+    <div class="ob-hero">🍳</div>
+    <h2>今天吃什么</h2>
+    <p class="lead">住在日本的中文厨房助手<br>一键出菜单，顺手把冰箱吃干净</p>
+    <div class="sell"><span>🎲</span><div><b>一个按钮出今天三餐</b>不用规划一周，不用做选择题</div></div>
+    <div class="sell"><span>🧊</span><div><b>冰箱记得住</b>拍张小票就入库，快过期了会提醒你先吃它</div></div>
+    <div class="sell"><span>📊</span><div><b>顺便看营养</b>这顿多少蛋白、占今天多少，一眼就懂</div></div>
+    <div class="sell"><span>🇯🇵</span><div><b>买菜带日语</b>清单自动配日文名，照着货架找或直接给店员看</div></div>
+    <div style="height:18px"></div>
+    <button class="btn-main" id="obGo1">开始 →</button>
+    <button class="btn-line" id="obSkip" style="margin-top:8px;border:0;background:none">跳过，直接用</button>
+  </div>
+
+  <div id="obStep1" class="hide">
+    <div class="ob-hero">📏</div>
+    <h2>先量个身</h2>
+    <p class="lead">只填这一次，用来算你一天该吃多少<br>之后随时能在 ⚙️ 里改</p>
+    <div class="grid2">
+      <div class="field"><label>性别</label><div class="seg sm" id="obSex"><button data-v="m">男</button><button data-v="f" class="on">女</button></div></div>
+      <div class="field"><label>年龄</label><input type="number" id="obAge" inputmode="numeric" placeholder="30"></div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>身高 cm</label><input type="number" id="obH" inputmode="numeric" placeholder="165"></div>
+      <div class="field"><label>体重 kg</label><input type="number" id="obW" inputmode="numeric" placeholder="55"></div>
+    </div>
+    <div class="field"><label>平时动得多吗</label><div class="seg sm" id="obAct">
+      <button data-v="1.3">几乎不动</button><button data-v="1.5" class="on">日常走动</button><button data-v="1.7">常运动</button></div></div>
+    <div class="field"><label>想要什么</label><div class="seg sm" id="obGoal">
+      <button data-v="cut">减脂</button><button data-v="keep" class="on">维持</button><button data-v="gain">增肌</button></div></div>
+    <div class="tdee-box" id="obTdee">填完上面就会算出来</div>
+    <button class="btn-main" id="obGo2">下一步 →</button>
+    <button class="btn-line" id="obSkip2" style="margin-top:8px;border:0;background:none">用默认值就行</button>
+  </div>
+
+  <div id="obStep2" class="hide">
+    <div class="ob-hero">🥬</div>
+    <h2>还有两件小事</h2>
+    <p class="lead">都可以跳过，之后再补也行</p>
+    <div class="field"><label>有什么不吃的？</label><div class="seg sm" id="obDiet">
+      <button data-v="all" class="on">都吃</button><button data-v="nored">不吃红肉</button><button data-v="fish">只吃鱼虾</button><button data-v="veg">全素</button></div></div>
+    <div class="field"><label>忌口（逗号分隔，选填）</label><input type="text" id="obAvoid" placeholder="香菜, 内脏"></div>
+    <div class="grid2">
+      <div class="field"><label>住在哪（选填）</label><input type="text" id="obCity" placeholder="東京都 新宿区"></div>
+      <div class="field"><label>最近的车站</label><input type="text" id="obArea" placeholder="高田馬場"></div>
+    </div>
+    <p class="muted" style="margin:10px 0 14px">地点只用来生成买菜路线，不会上传到任何地方。</p>
+    <div class="field"><label>冰箱里现在大概有什么？（选填，逗号分隔）</label>
+      <textarea id="obStock" rows="2" placeholder="鸡蛋, 牛奶, 豆腐, 菠菜"></textarea></div>
+    <button class="btn-main" id="obFinish">好了，开始用 🍳</button>
+  </div>
+</div></div>
+
+<div id="toast"></div>
